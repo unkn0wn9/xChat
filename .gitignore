@@ -133,4 +133,4 @@ dist
 *.db
 
 # config file
-./utils/config.js
+server/utils/config.js
