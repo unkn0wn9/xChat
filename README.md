@@ -16,6 +16,9 @@
 cd ./server
 npm install
 
+# 初始化数据库(Sqlite3)
+node ./utils/db.js
+
 # 启动Server
 node app.js
 ```

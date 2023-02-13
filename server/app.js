@@ -16,7 +16,8 @@ const jwt = require('koa-jwt')
 const { secret } = require('./utils/config')
 app.use(jwt({ secret, debug: true }).unless({
     path: [
-        '/token'
+        '/token',
+        '/users'
     ]
 }))
 
@@ -40,8 +41,8 @@ app.use(async (ctx) => {
 })
 
 // Debug
-// app.on("error", (err, ctx) => {
-//     console.error("Ooops..\n", err);
+// app.on('error', (err, ctx) => {
+//     console.error('Ooops..\n', err);
 // });
 
 app.listen(3001, () => {
