@@ -24,10 +24,12 @@ app.use(jwt({ secret, debug: true }).unless({
 // 引入控制器
 const token = require('./controllers/token')
 const users = require('./controllers/users')
+const messages = require('./controllers/messages')
 
 // 引入主路由
 router.use('/token', token.routes())
 router.use('/users', users.routes())
+router.use('/messages', messages.routes())
 
 app.use(router.routes())
 

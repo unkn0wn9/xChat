@@ -1,0 +1,8 @@
+// Use your own secret
+const secret = ''
+const openai_apikey = ''
+
+module.exports = {
+    secret,
+    openai_apikey
+}

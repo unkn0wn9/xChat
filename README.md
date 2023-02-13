@@ -12,8 +12,13 @@
 克隆或下载本项目到服务器，根据以下指令分别启动Server和Platform服务即可。
 
 ```shell
-# 获取Server依赖
 cd ./server
+
+# 填写配置信息
+cp ./utils/config.js.template ./utils/config.js
+vim ./utils/config.js # 按情况填写
+
+# 获取Server依赖
 npm install
 
 # 初始化数据库(Sqlite3)
