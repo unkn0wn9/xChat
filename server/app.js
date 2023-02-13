@@ -11,10 +11,21 @@ const { koaBody } = require('koa-body');
 app.use(koaBody())
 app.use(cors())
 
+// 认证机制
+const jwt = require('koa-jwt')
+const { secret } = require('./utils/config')
+app.use(jwt({ secret, debug: true }).unless({
+    path: [
+        '/token'
+    ]
+}))
+
 // 引入控制器
+const token = require('./controllers/token')
 const users = require('./controllers/users')
 
 // 引入主路由
+router.use('/token', token.routes())
 router.use('/users', users.routes())
 
 app.use(router.routes())
@@ -28,9 +39,10 @@ app.use(async (ctx) => {
     ctx.body = 'xChat Server Status: OK!'
 })
 
-app.on("error", (err, ctx) => {
-    console.error("Ooops..\n", err);
-});
+// Debug
+// app.on("error", (err, ctx) => {
+//     console.error("Ooops..\n", err);
+// });
 
 app.listen(3001, () => {
     console.log('localhost:3001')
