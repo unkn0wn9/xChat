@@ -12,10 +12,20 @@ router.get('/', async (ctx, next) => {
 })
 
 router.post('/', async (ctx, next) => {
-    ctx.verifyParams({
-        email: { type: 'email', required: true },
-        password: { type: 'string', required: true }
-    });
+    try {
+        ctx.verifyParams({
+            email: { type: 'email', required: true },
+            password: { type: 'string', required: true }
+        });
+    } catch (err) {
+        ctx.body = {
+            code: 413,
+            data: {
+                msg: '接口格式错误'
+            }
+        }
+    }
+
     const params = ctx.request.body
     const { email, password } = params
 

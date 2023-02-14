@@ -5,9 +5,18 @@ const callCompletions = require('../utils/openai')
 
 
 router.post('/', async (ctx, next) => {
-    ctx.verifyParams({
-        msg: { type: 'string', required: true },
-    });
+    try{
+        ctx.verifyParams({
+            msg: { type: 'string', required: true },
+        });
+    }catch (err) {
+        ctx.body = {
+            code: 413,
+            data: {
+                msg: '接口格式错误'
+            }
+        }
+    }
     const params = ctx.request.body
     const msg = params.msg
     try {
