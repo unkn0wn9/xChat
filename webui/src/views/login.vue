@@ -9,7 +9,7 @@
         <div><el-button color="#626aef" @click="dialogVisible = true">登录/注册</el-button></div>
     </div>
     <div class="login">
-        <el-dialog v-model="dialogVisible" @click="handleLogin" title="登录/注册" width="100%">
+        <el-dialog v-model="dialogVisible" @click="handleLogin" title="登录/注册" width="90%">
             <el-form :model="form">
                 <el-form-item label="邮箱">
                     <el-input v-model="form.email" placeholder="用户不存在时将自动注册" />
