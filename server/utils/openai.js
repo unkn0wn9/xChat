@@ -25,7 +25,10 @@ const callCompletions = async (prompt) => {
         .then((res) => {
             const ret_text = res.choices[0].text
             const usage = res.usage.total_tokens
-            return ret_text
+            return {
+                ret_text,
+                usage
+            }
         })
         .catch((err) => {
             console.log(err)
