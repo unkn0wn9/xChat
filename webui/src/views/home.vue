@@ -7,7 +7,7 @@
             </li>
         </ul>
         <div class="chat-input">
-            <el-input v-model="msg" placeholder="" />
+            <el-input v-model="msg" placeholder="" @keyup.enter.native="handleSendMsg" />
         </div>
         <div class="chat-enter">
             <el-button color="#626aef" @click="handleSendMsg">发送</el-button>
@@ -28,9 +28,11 @@ const msg = ref('')
 //     { sender: 1, msg: 'Nice to see u' },
 //     { sender: 0, msg: 'Nice to see u,too' },
 //     { sender: 1, msg: 'How are u' },
-//     { sender: 0, msg: 'Fine, thank you' }
+//     { sender: 0, msg: '陆昕，你是我的太阳，照亮了我的生活；你是我的月亮，给我带来无尽的梦想；你是我的星星，带给我无限的美丽；你是我的温暖，让我不再孤独；你是我永远的爱，我愿今生今世和你在一起，爱你一万年。' }
 // ]) //0是Bot 1是自己
-const msg_list = reactive([]);
+const msg_list = reactive([
+    { sender: 0, msg: '你好,我是xChat机器人,欢迎向我提问！' }
+]);
 
 function add_msg(sender, msg) {
     msg_list.push({
@@ -40,9 +42,11 @@ function add_msg(sender, msg) {
 }
 
 async function handleSendMsg() {
-    add_msg(1, msg.value)
-    send(msg.value).then(value => {
-        console.log(value)
+    let buf = msg.value
+    msg.value = ''
+    add_msg(1, buf)
+    send(buf).then(value => {
+        // console.log(value)
         add_msg(0, value.data.data.msg)
     })
 }
@@ -85,7 +89,7 @@ async function handleSendMsg() {
 
 .infinite-list .infinite-list-item {
     display: flex;
-    height: 50px;
+    min-height: 50px;
     /* background: var(--el-color-primary-light-9); */
     margin: 10px;
     color: var(--el-color-primary);
@@ -98,20 +102,20 @@ async function handleSendMsg() {
 .msg {
     color: black;
     width: 70%;
-    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     border: 2px solid var(--el-border-color);
-    border-radius: 4px
+    border-radius: 4px;
+    padding: 10px;
 }
 
 .msg-sender {
     margin-left: auto;
-    background-color: #626aef;
+    background-color: #edfeda;
 }
 
 .msg-bot {
-    background-color: darkgray;
+    background-color: #fefefe;
 }
 </style>

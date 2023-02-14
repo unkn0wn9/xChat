@@ -22,10 +22,15 @@ vim ./utils/config.js # 按情况填写
 npm install
 
 # 初始化数据库(Sqlite3)
-node ./utils/db.js
+node ./utils/db.js init
 
 # 启动Server
 node app.js
+
+# 启动WebUI
+cd ../webui
+npm install
+npm run dev # 开发环境
 ```
 
 ## :star: 鸣谢
