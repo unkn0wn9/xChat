@@ -6,11 +6,14 @@
   <header>
 
   </header>
-
-  <div id="main">
-    <h3>欢迎使用xChat</h3>
-    <el-button color="#626aef" @click="dialogVisible = true">登录/注册</el-button>
-    <el-dialog v-model="dialogVisible" title="登录/注册" width="30%">
+  <div class="main">
+    <div>
+      <h3>欢迎使用xChat</h3>
+    </div>
+    <div><el-button color="#626aef" @click="dialogVisible = true">登录/注册</el-button></div>
+  </div>
+  <div class="login">
+    <el-dialog v-model="dialogVisible" title="登录/注册" width="100%">
       <el-form :model="form">
         <el-form-item label="邮箱">
           <el-input v-model="form.email" placeholder="用户不存在时将自动注册" />
@@ -27,6 +30,8 @@
       </template>
     </el-dialog>
   </div>
+
+
 
 </template>
 
@@ -47,7 +52,14 @@ const form = reactive({
   margin-right: 10px;
 }
 
-#main {
+.main {
+  width: 200px;
+  height: 100px;
+  position: fixed;
+  top: calc((100% - 100px) / 2);
+  left: calc((100% - 200px) / 2);
+  margin: auto;
   text-align: center;
 }
+
 </style>
