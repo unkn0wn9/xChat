@@ -1,8 +1,10 @@
 // Use your own secret
 const secret = ''
 const openai_apikey = ''
+const default_token_limit = 0
 
 module.exports = {
     secret,
-    openai_apikey
+    openai_apikey,
+    default_token_limit
 }
