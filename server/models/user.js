@@ -7,7 +7,8 @@ class User extends Model { }
 User.init({
     id: {
         type: DataTypes.INTEGER,
-        primaryKey: true
+        primaryKey: true,
+        autoIncrement: true
     },
     email: {
         type: DataTypes.STRING,
