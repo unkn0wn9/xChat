@@ -2,9 +2,11 @@
     <div class="chat-header">
         <el-row :gutter="20" style="height:100%">
             <el-col :span="8" style="padding-left: 5%">
-                <el-icon size="30" color="#626aef">
-                    <Back />
-                </el-icon>
+                <el-button key="plain" type="primary" link @click="handleLogout">
+                    <el-icon size="30" color="#626aef">
+                        <Back />
+                    </el-icon>
+                </el-button>
             </el-col>
             <el-col :span="8" style="text-align: center;padding-top: 7px;">
                 <span><strong>xChat</strong></span>
@@ -30,6 +32,15 @@
             </div>
         </div>
     </div>
+    <el-dialog v-model="logoutDialogVisible" title="退出" width="90%">
+        <span>确定退出吗？</span>
+        <template #footer>
+            <span class="dialog-footer">
+                <el-button @click="logoutDialogVisible = false">取消</el-button>
+                <el-button id="logout" color="#626aef" @click="logout">退出</el-button>
+            </span>
+        </template>
+    </el-dialog>
 </template>
 
 <script setup>
@@ -48,6 +59,7 @@ const msg_list = reactive([ // 0是Bot发送 1是用户发送
 ]);
 
 const loading = ref(false)
+const logoutDialogVisible = ref(false)
 
 function add_msg(sender, msg) {
     msg_list.push({
@@ -65,6 +77,15 @@ async function handleSendMsg() {
         loading.value = false
         add_msg(0, value.data.data.msg)
     })
+}
+
+function logout() {
+    localStorage.removeItem('token')
+    router.push({ path: '/login' })
+}
+
+function handleLogout() {
+    logoutDialogVisible.value = true
 }
 
 </script>
