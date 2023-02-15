@@ -1,29 +1,34 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
+
+import home from '@/views/home.vue'
+import login from '@/views/login.vue'
+
+const routes = [
+    {
+        path: '/home',
+        name: 'home',
+        component: home,
+        meta: {
+            title: '首页',
+        },
+    },
+    {
+        path: '/login',
+        name: 'login',
+        component: login,
+        meta: {
+            title: '登录',
+        },
+    },
+    {
+        path: '/*',
+        redirect: '/home',
+    },
+]
 
 const router = createRouter({
-    history: createWebHistory(),
-    routes: [
-        {
-            path: '/home',
-            name: 'home',
-            component: import('../views/home.vue'),
-            meta: {
-                title: '首页',
-            },
-        },
-        {
-            path: '/login',
-            name: 'login',
-            component: import('../views/login.vue'),
-            meta: {
-                title: '登录',
-            },
-        },
-        {
-            path: '/*',
-            redirect: '/home',
-        },
-    ]
+    history: createWebHashHistory(),
+    routes
 })
 
 router.beforeEach((to, from, next) => {
