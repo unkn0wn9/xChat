@@ -15,12 +15,7 @@ router.post('/', async (ctx, next) => {
             password: { type: 'string', required: true }
         });
     } catch (err) {
-        ctx.body = {
-            code: 413,
-            data: {
-                msg: '接口格式错误'
-            }
-        }
+        ctx.throw(418)
     }
 
     const params = ctx.request.body
@@ -37,29 +32,24 @@ router.post('/', async (ctx, next) => {
             const password_crypt = crypto.createHash('sha1').update(password).digest('hex')
             if (password_crypt == user.password) {
                 //登录成功
-                const token = sign({ email: email }, secret, { expiresIn: '1d' })
+                const token = sign({ email: email }, secret, { expiresIn: '3d' })
                 ctx.body = {
+                    code: 200,
                     data: {
                         'msg': '登录成功',
                         'email': email,
                         'token': token
-                    },
-                    code: 200
+                    }
                 }
             } else {
                 // 密码错误,登录失败
-                throw (403)
+                ctx.throw(403)
             }
         } else {
-            throw (403)
+            ctx.throw(403)
         }
     } catch (err) {
-        if (err == 403) {
-            ctx.body = {
-                code: 403,
-                data: '用户名密码错误'
-            }
-        }
+        ctx.throw(err)
     }
 })
 

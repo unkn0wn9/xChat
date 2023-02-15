@@ -8,7 +8,7 @@ const callCompletions = async (prompt) => {
         temperature: 0.7,
         top_p: 1,
         frequency_penalty: 0,
-        presence_penalty: 0.6,
+        presence_penalty: 0,
         max_tokens: 1024
     }
     var options = {

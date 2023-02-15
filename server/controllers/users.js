@@ -6,8 +6,8 @@ const { User } = require('../models/user')
 
 router.get('/', async (ctx, next) => {
     ctx.body = {
-        data: ctx.state.user,
-        code: 200
+        code: 200,
+        data: ctx.state.user
     }
 })
 
@@ -18,12 +18,7 @@ router.post('/', async (ctx, next) => {
             password: { type: 'string', required: true }
         });
     } catch (err) {
-        ctx.body = {
-            code: 413,
-            data: {
-                msg: '接口格式错误'
-            }
-        }
+        ctx.throw(418)
     }
 
     const params = ctx.request.body
@@ -36,7 +31,7 @@ router.post('/', async (ctx, next) => {
             }
         })
         if (user_db != null) {
-            throw (403)
+            ctx.throw(403)
         }
         const user = await User.create({
             email: email,
@@ -48,12 +43,7 @@ router.post('/', async (ctx, next) => {
             data: { msg: '注册成功', email: user.email }
         }
     } catch (err) {
-        if (err == 403) {
-            ctx.body = {
-                code: 403,
-                data: '用户已存在'
-            }
-        }
+        ctx.throw(err)
     }
 })
 

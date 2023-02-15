@@ -10,24 +10,22 @@ router.post('/', async (ctx, next) => {
             msg: { type: 'string', required: true },
         });
     } catch (err) {
-        ctx.body = {
-            code: 413,
-            data: {
-                msg: '接口格式错误'
-            }
-        }
+        ctx.throw(413)
     }
     const params = ctx.request.body
     const msg = params.msg
     try {
         if (ctx.state.user == null) {
-            throw (413)
+            ctx.throw(413)
         }
         const user_db = await User.findOne({
             where: {
                 email: ctx.state.user.email
             }
         })
+        if (user_db == null) {
+            ctx.throw(401)
+        }
         const token_usage = user_db.token_usage
         const token_limit = user_db.token_limit
 
@@ -51,13 +49,7 @@ router.post('/', async (ctx, next) => {
             data: { msg: ret_text }
         }
     } catch (err) {
-        console.log(err)
-        if (err == 413) {
-            ctx.body = {
-                code: 413,
-                data: '请先登录'
-            }
-        }
+        ctx.throw(err)
     }
 })
 
