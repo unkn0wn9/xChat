@@ -3,8 +3,18 @@ const secret = ''
 const openai_apikey = ''
 const default_token_limit = 0
 
+const db_config = {
+    dialect: 'mysql', /* 选择 'sqlite' | 'mysql' | 'mariadb' | 'postgres' | 'mssql' 其一 */
+    host: '', // sqlite可留空
+    port: 3306, // sqlite可留空
+    database: '', // sqlite可留空
+    username: '', // sqlite可留空
+    password: '' // sqlite可留空
+}
+
 module.exports = {
     secret,
     openai_apikey,
-    default_token_limit
+    default_token_limit,
+    db_config
 }
