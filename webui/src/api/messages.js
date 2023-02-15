@@ -1,9 +1,10 @@
 import axios from 'axios'
+import { base_url } from './config'
 
 const send = (msg) => {
     return axios({
         method: 'post',
-        url: 'http://localhost:3001/messages',
+        url: `${base_url}/messages`,
         headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`
         },
