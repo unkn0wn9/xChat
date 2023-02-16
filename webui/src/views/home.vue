@@ -1,28 +1,26 @@
 <template>
     <div class="chat-header">
-        <el-row :gutter="20" style="height:100%">
-            <el-col :span="8" style="padding-left: 5%">
-                <el-button key="plain" type="primary" link @click="handleLogout">
-                    <el-icon size="30" color="#626aef">
+        <el-row class="chat-header-row">
+            <el-col :span="8">
+                <el-button link @click="handleLogout" style="padding-left:4%;">
+                    <el-icon size="20" color="#626aef">
                         <Back />
                     </el-icon>
                 </el-button>
             </el-col>
-            <el-col :span="8" style="text-align: center;padding-top: 7px;">
+            <el-col :span="8" style="text-align:center;">
                 <span><strong>xChat</strong></span>
-            </el-col>
-            <el-col :span="8">
-                <div class="grid-content ep-bg-purple" />
             </el-col>
         </el-row>
     </div>
     <div class="chat-container">
-        <ul class="infinite-list" style="overflow: auto">
-            <li v-for="i in msg_list" :key="i" class="infinite-list-item">
+        <el-scrollbar ref="scrollbarRef" class="infinite-list">
+            <div v-for="i in msg_list" class="infinite-list-item">
                 <div class="msg msg-sender" v-if="i.sender">{{ i.msg }}</div>
                 <div class="msg msg-bot" v-else>{{ i.msg }}</div>
-            </li>
-        </ul>
+            </div>
+        </el-scrollbar>
+
         <div class="input-container">
             <div class="chat-input">
                 <el-input v-loading="loading" v-model="msg" placeholder="" @keyup.enter.native="handleSendMsg" />
@@ -43,12 +41,11 @@
     </el-dialog>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
-import {
-    Back
-} from '@element-plus/icons-vue'
+import type { ElScrollbar } from 'element-plus'
+import { Back } from '@element-plus/icons-vue'
 
 import { send } from '../api/messages'
 
@@ -60,6 +57,7 @@ const msg_list = reactive([ // 0是Bot发送 1是用户发送
 
 const loading = ref(false)
 const logoutDialogVisible = ref(false)
+const scrollbarRef = ref<InstanceType<typeof ElScrollbar>>()
 
 function add_msg(sender, msg) {
     msg_list.push({
@@ -73,9 +71,15 @@ async function handleSendMsg() {
     loading.value = true
     msg.value = ''
     add_msg(1, buf)
+    if (scrollbarRef.value!.wrapRef) {
+        scrollbarRef.value!.setScrollTop(scrollbarRef.value!.wrapRef.scrollHeight)
+    }
     send(buf).then(value => {
         loading.value = false
         add_msg(0, value.data.data.msg)
+        if (scrollbarRef.value!.wrapRef) {
+            scrollbarRef.value!.setScrollTop(scrollbarRef.value!.wrapRef.scrollHeight)
+        }
     })
 }
 
@@ -93,19 +97,29 @@ function handleLogout() {
 <style>
 .chat-header {
     position: fixed;
-    top: 3%;
     width: 100%;
     height: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    /* text-align: center; */
+    z-index: 100;
+}
+
+.chat-header-row {
+    width: calc(100% - 20px);
+    height: 30px;
+    left: 0;
+    font-size: 18px;
 }
 
 .chat-container {
     position: fixed;
-    width: 97%;
-    height: 97%;
-    left: calc((100% - 97%) / 2);
-    top: calc((100% - 97%) / 2);
+    width: 98%;
+    height: 98%;
+    left: calc((100% - 98%) / 2);
+    top: calc((100% - 98%) / 2);
     margin: auto;
-    border: 2px solid var(--el-border-color);
+    border: 1px solid var(--el-border-color);
     border-radius: 4px
 }
 
@@ -131,17 +145,17 @@ function handleLogout() {
 }
 
 .infinite-list {
-    height: 90%;
+    position: relative;
+    top: 30px;
+    height: calc(100% - 30px - 30px - 10px) !important;
     padding: 0;
     margin: 0;
-    padding-top: 35px !important;
     list-style: none;
 }
 
 .infinite-list .infinite-list-item {
     display: flex;
     min-height: 50px;
-    /* background: var(--el-color-primary-light-9); */
     margin: 10px;
     color: var(--el-color-primary);
 }
