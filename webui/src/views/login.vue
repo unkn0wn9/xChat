@@ -48,8 +48,6 @@
 
         </el-dialog>
     </div>
-
-
 </template>
 
 <script setup>
@@ -84,6 +82,8 @@ async function handleLogin() {
         })
         if (value.data.code == 200) {
             localStorage.setItem('token', value.data.data.token)
+            let expired_at = new Date().getTime() + 1000 * 60 * 60 * 24 * 3 //ms
+            localStorage.setItem('token_expired_at', expired_at)
             router.push({ path: '/home' })
         }
     }).catch(function (error) {

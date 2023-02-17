@@ -80,11 +80,14 @@ async function handleSendMsg() {
         if (scrollbarRef.value!.wrapRef) {
             scrollbarRef.value!.setScrollTop(scrollbarRef.value!.wrapRef.scrollHeight)
         }
+    }).catch(err => {
+        console.log(err)
     })
 }
 
 function logout() {
     localStorage.removeItem('token')
+    localStorage.removeItem('token_expired_at')
     router.push({ path: '/login' })
 }
 
