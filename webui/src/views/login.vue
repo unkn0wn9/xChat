@@ -4,7 +4,7 @@
     </header>
     <div class="login-container" v-loading="loading">
         <div>
-            <h3>欢迎使用xChat</h3>
+            <h3>欢迎使用{{ bot_name }}</h3>
         </div>
         <div><el-button color="#626aef" @click="loginDialogVisible = true">登录/注册</el-button></div>
     </div>
@@ -55,6 +55,8 @@ import { ref } from 'vue'
 import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
+
+import { bot_name } from '../api/config'
 
 import { login } from '../api/token'
 import { register } from '../api/users'

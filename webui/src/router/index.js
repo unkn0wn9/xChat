@@ -3,13 +3,15 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import home from '@/views/home.vue'
 import login from '@/views/login.vue'
 
+import { site_name } from '@/api/config.js'
+
 const routes = [
     {
         path: '/home',
         name: 'home',
         component: home,
         meta: {
-            title: '首页',
+            title: `对话 | ${site_name}`,
         },
     },
     {
@@ -17,7 +19,7 @@ const routes = [
         name: 'login',
         component: login,
         meta: {
-            title: '登录',
+            title: `登录 | ${site_name}`,
         },
     },
     {

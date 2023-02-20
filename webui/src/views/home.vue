@@ -9,7 +9,7 @@
                 </el-button>
             </el-col>
             <el-col :span="8" style="text-align:center;">
-                <span><strong>xChat</strong></span>
+                <span><strong>{{ bot_name }}</strong></span>
             </el-col>
         </el-row>
     </div>
@@ -47,12 +47,14 @@ import { useRouter } from 'vue-router'
 import type { ElScrollbar } from 'element-plus'
 import { Back } from '@element-plus/icons-vue'
 
+import { site_name, bot_name } from '../api/config'
+
 import { send } from '../api/messages'
 
 const router = useRouter()
 const msg = ref('')
 const msg_list = reactive([ // 0是Bot发送 1是用户发送
-    { sender: 0, msg: '你好,我是xChat机器人,欢迎向我提问！' }
+    { sender: 0, msg: `你好,我是来自${site_name}的${bot_name},欢迎向我提问!` }
 ]);
 
 const loading = ref(false)

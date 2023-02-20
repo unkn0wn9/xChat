@@ -32,6 +32,10 @@ pm2 start --name xchat-server app.js # 生产环境
 # 启动WebUI
 cd ../webui
 npm install
+
+# 配置API接口地址
+vim ./src/api/config.js
+
 npm run dev # 开发环境
 
 # 生产环境
