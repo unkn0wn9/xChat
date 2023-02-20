@@ -136,6 +136,7 @@ function handleLogout() {
     border: 2px solid var(--el-border-color);
     border-radius: 4px;
     padding: 10px;
+    white-space: pre-wrap;
 }
 
 .msg-sender {

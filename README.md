@@ -1,4 +1,5 @@
 ## :rocket: xChat
+<div style="text-align:center;"><img src="./webui/src/assets/logo.png" /></div>
 > 快速构建你自己的chatGPT平台，以便分享给朋友一起感受AI的魅力。
 
 ## :scroll: 特性
@@ -26,7 +27,7 @@ node ./utils/db_tool.js init
 
 # 启动Server
 node app.js # 开发环境
-pm2 start app.js # 生产环境
+pm2 start --name xchat-server app.js # 生产环境
 
 # 启动WebUI
 cd ../webui
