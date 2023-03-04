@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 
 import home from '@/views/home.vue'
 import login from '@/views/login.vue'
+import card from '@/views/card.vue'
 
 import { site_name } from '@/api/config.js'
 
@@ -20,6 +21,14 @@ const routes = [
         component: login,
         meta: {
             title: `登录 | ${site_name}`,
+        },
+    },
+    {
+        path: '/card',
+        name: 'card',
+        component: card,
+        meta: {
+            title: `充值 | ${site_name}`,
         },
     },
     {

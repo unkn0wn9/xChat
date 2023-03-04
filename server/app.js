@@ -54,11 +54,13 @@ app.use(jwt({ secret, debug: true }).unless({
 const token = require('./controllers/token')
 const users = require('./controllers/users')
 const messages = require('./controllers/messages')
+const cards = require('./controllers/cards')
 
 // 引入主路由
 router.use('/token', token.routes())
 router.use('/users', users.routes())
 router.use('/messages', messages.routes())
+router.use('/cards', cards.routes())
 
 app.use(router.routes())
 

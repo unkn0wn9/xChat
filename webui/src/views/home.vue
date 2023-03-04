@@ -16,8 +16,11 @@
     <div class="chat-container">
         <el-scrollbar ref="scrollbarRef" class="infinite-list">
             <div v-for="i in msg_list" class="infinite-list-item">
-                <div class="msg msg-sender" v-if="i.sender">{{ i.msg }}</div>
-                <div class="msg msg-bot" v-else>{{ i.msg }}</div>
+                <div class="msg msg-sender" v-if="i.sender == 1">{{ i.msg }}</div>
+                <div class="msg msg-bot" v-else-if="i.sender == 0">{{ i.msg }}</div>
+                <div class="msg msg-bot" v-else-if="i.sender == 2">
+                    <p>您的Token使用超额,请点击<a href="">购卡</a>并<span style="color: blue;" @click="router.push({ path: '/card' })">充值</span></p>
+                </div>
             </div>
         </el-scrollbar>
 
@@ -53,7 +56,7 @@ import { send } from '../api/messages'
 
 const router = useRouter()
 const msg = ref('')
-const msg_list = reactive([ // 0是Bot发送 1是用户发送
+const msg_list = reactive([ // 0是Bot发送 1是用户发送 2是支付
     { sender: 0, msg: `你好,我是来自${site_name}的${bot_name},欢迎向我提问!` }
 ]);
 
@@ -64,7 +67,7 @@ const scrollbarRef = ref<InstanceType<typeof ElScrollbar>>()
 function add_msg(sender, msg) {
     msg_list.push({
         sender,
-        msg
+        msg,
     })
 }
 
@@ -78,7 +81,12 @@ async function handleSendMsg() {
     }
     send(buf).then(value => {
         loading.value = false
-        add_msg(0, value.data.data.msg)
+        let tmp_msg = value.data.data.msg
+        if ('您的Token使用超额,请联系管理员' == tmp_msg.trim()) {
+            add_msg(2, tmp_msg)
+        } else {
+            add_msg(0, tmp_msg)
+        }
         if (scrollbarRef.value!.wrapRef) {
             scrollbarRef.value!.setScrollTop(scrollbarRef.value!.wrapRef.scrollHeight)
         }
